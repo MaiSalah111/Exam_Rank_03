@@ -22,11 +22,6 @@
 
 // No call to another function will be done on the file descriptor between 2 calls of get_next_line. Finally we consider that get_next_line has an undefined behaviour when reading from a binary file.
 
-#include <unistd.h> // For read
-#include <stdlib.h> // For malloc && free
-
-/*#define BUFFER_SIZE 8192*/
-
 #ifndef GET_NEXT_LINE_H
 #define GET_NEXT_LINE_H
 
@@ -69,14 +64,29 @@ char	*get_next_line(int fd)
 	return (buffer);
 }
 
+int main(void)
+{
+	int fd;
+	fd = open("test.txt",O_RDONLY);
+    char *line;
+
+	while((line = get_next_line(fd)))
+	{
+		printf("%s",line);
+		free(line);
+	}
+}
+
 // int	main(void)
 // {
-// 	int fd = open("munia.txt",O_RDONLY);
+// 	int fd = open("test.txt",O_RDONLY);
 // 	char *line = get_next_line(fd);
 
 // 	while(line)
 // 	{
 // 		printf("%s",line);
 // 		free(line);
+// 		line = get_next_line(fd);
 // 	}
 // }
+
